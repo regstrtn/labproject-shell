@@ -8,7 +8,14 @@
 #include<sys/wait.h>
 #include<errno.h>
 #include<signal.h>
+#include <sys/stat.h>
 
-int main() {
-				mkdir("/home/user/Downloads/Hello", 0777);
+
+int main(int argc, char* argv[]) {
+				int i = 0;
+				for(i=1;i<=argc;i++) {
+					mkdir(argv[i], 0777);
+					if(errno == EEXIST) perror("mymkdir error: ");
+				}
+				return 1;
 }
