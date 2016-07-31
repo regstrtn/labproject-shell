@@ -12,9 +12,38 @@
 #define CMDLEN 1250
 #define MAXNUMTOKENS 100
 
+char *shellfn[] = {"mycd","exit"};
+int numshellfn = 2;
+
+int myexit(char **args) {
+	exit(0);
+}
+
+int mycd(char **args) {
+	if(args[1] == NULL) {
+			perror("mycd");
+	}
+	else {
+					chdir(args[1]);
+	}
+	return 1;
+}
+
 int cmd_execute(char** args) {
 	pid_t pid;
 	int status;
+	int i=0;
+	if(args[0]==NULL) {
+					return 1;
+	}
+	for(i=0;i<numshellfn;i++) {
+		if(strcmp(args[0], shellfn[i])==0) {
+			if(i == 0) mycd(args);
+			else if(i==1) myexit(args);
+			return 1;
+		}
+	}
+
 	if((pid = fork())==0) {
 	//printf("%s\n", args[0]);
 		if(execvp(args[0], args)==-1) {
@@ -31,7 +60,7 @@ char** split_into_tokens(char* str) {
 	char* pch;
 	char* delim = " \t\n\r";
 	int pos = 0;
-	char** tokens = malloc(MAXNUMTOKENS*sizeof(char*));
+	char** tokens = (char **)malloc(MAXNUMTOKENS*sizeof(char*));
 	pch = strtok(str, delim);
 	while(pch!=NULL) {
 		tokens[pos] = pch;

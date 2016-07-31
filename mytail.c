@@ -30,10 +30,12 @@ int printlines(FILE *fp, int n) {
 	cbuffer *a, *b;
 	a = (cbuffer*)malloc(sizeof(cbuffer));
 	a->i = 0;
+	a->str[0] = 0;
 	b = a;
 	for(i=1;i<n;i++) {
 		b->next = (cbuffer*)malloc(sizeof(cbuffer));
 	 	b->next->i = i;
+		b->next->str[0]=0;
 		b->next->prev = b;
  		b = b->next;
 	}
@@ -54,21 +56,34 @@ int printlines(FILE *fp, int n) {
 							bufsize = 0;
 			}
 		}
+	b = a;
 	do {
-		printf("%s", b->str);
 		b = b->next;
-	} while(a!=b->next);
-}
+		if(b->str[0]!=0) printf("%s",b->str);
+	} while(a!=b);
+return 1;
+} 
 
 int main(int argc, char* argv[]) {
 //	printf("%s %s\n", argv[1], argv[2]);
-	//if(argv[1]==NULL) return 1;
-	char nline[10];
+	int n;
+	char *flagidentifier = "-";
+	int argnum = 1;
+	if(argv[1]==NULL) return 1;
+	char nline[20];
+	if(strncmp(argv[1], flagidentifier, 1)==0){
 	strcpy(nline, argv[1]+1);
-	int n = atoi(nline);
+	n = atoi(nline);
+	argnum = 2;
+	}
+	else {
+					n = 10;
+	}
 	FILE *fp;
-	fp = fopen("2015.txt", "r");
+	if((fp = fopen(argv[argnum], "r"))==NULL) {
+					perror("mytail");
+					return 1;
+	}
 	cbuffer *a, *b;
-	printf("%s %d\n", nline, n*3);
-	printlines(fp, 10);
+	printlines(fp, n);
 }

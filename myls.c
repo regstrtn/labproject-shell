@@ -22,6 +22,7 @@ int main(int argc, char* argv[]) {
 	struct passwd *pw;
 	struct group *gr;
 	time_t modtime;
+	int maxwidth = 8;
 	char time_format[] = "%a %b %d %Y";
 	DIR *dr = opendir(".");
 	if(dr==NULL) {
@@ -44,7 +45,7 @@ int main(int argc, char* argv[]) {
 		gr 	= getgrgid(st.st_gid);
 		printf(" %s %s", pw->pw_name, gr->gr_name);
     //st.st_uid, st.st_gid,
-		printf(" %lld %ld %s\n", st.st_size, st.st_mtime, de->d_name);	
+		printf(" %*lld %ld %s\n", maxwidth, st.st_size, st.st_mtime, de->d_name);	
 		}
 	closedir(dr);
 	return 0;
