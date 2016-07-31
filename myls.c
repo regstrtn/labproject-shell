@@ -23,13 +23,21 @@ int main(int argc, char* argv[]) {
 	struct group *gr;
 	time_t modtime;
 	int maxwidth = 8;
+	char s[200];
+	size_t maxtime = 200;
+	char format[200];
+	struct tm* timeinfo;
 	char time_format[] = "%a %b %d %Y";
-	DIR *dr = opendir(".");
+	char dirtolist[200];
+	strcpy(dirtolist, ".");
+	if(argv[1] != NULL) strcpy(dirtolist, argv[1]); 
+	DIR *dr = opendir(dirtolist);
 	if(dr==NULL) {
 		printf("Could not open directory\n");
 		return 0;
 	}
 	while((de = readdir(dr))!=NULL) {
+		if(strncmp(de->d_name, ".", 1)==0) continue;
 		stat(de->d_name, &st);
 		printf( (S_ISDIR(st.st_mode)) ? "d" : "-");
     printf( (st.st_mode & S_IRUSR) ? "r" : "-");
@@ -43,9 +51,13 @@ int main(int argc, char* argv[]) {
     printf( (st.st_mode & S_IXOTH) ? "x" : "-");
 		pw = getpwuid(st.st_uid);
 		gr 	= getgrgid(st.st_gid);
+		printf(" %d", st.st_nlink);
 		printf(" %s %s", pw->pw_name, gr->gr_name);
     //st.st_uid, st.st_gid,
-		printf(" %*lld %ld %s\n", maxwidth, st.st_size, st.st_mtime, de->d_name);	
+		strcpy(format, "%b %d %H:%M:%S");
+		timeinfo = localtime(&st.st_mtime);
+		strftime(s, maxtime, format, timeinfo);
+		printf(" %*lld %s %s\n", maxwidth, st.st_size, s,de->d_name);	
 		}
 	closedir(dr);
 	return 0;
