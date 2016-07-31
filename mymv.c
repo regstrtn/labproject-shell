@@ -13,10 +13,13 @@
 #include <ftw.h>
 #include <getopt.h>
 
-int main(int argc, char* argv[]) {
-	//char *args[] = {"./hello/vim/sm.txt", "."};
-	int rv = rename(args[1], args[2]);
+int main(int argc, char * argv[]) {
+	if(argv[1]==NULL)  {
+		printf("mymv: No file specified\n");
+		return 1;
+		}
+	int rv = rename(argv[1], argv[2]);
 	if(rv) {
-	printf("Error: %d\n", errno);
+	printf("mymv: %d\n", errno);
 	}
 }

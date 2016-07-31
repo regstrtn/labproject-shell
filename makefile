@@ -1,10 +1,13 @@
-CC=g++
-CFLAGS=-I.
-DEPS = 
-OBJ = myls.o mymv.o myrm.o mytail.o mypwd.o mymkdir.o shell.o
-
-%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
-
-serial: $(OBJ)
-	gcc -o $@ $^ $(CFLAGS)
+all: myls mymv mymkdir mypwd mytail myrm
+myls:
+	gcc -o myls myls.c
+mymv:
+	gcc -o mymv mymv.c
+mypwd:
+	gcc -o mypwd mypwd.c
+myrm:
+	gcc -o myrm myrm.c
+mymkdir:
+	gcc -o mymkdir mymkdir.c
+mytail:
+	gcc -o mytail mytail.c
