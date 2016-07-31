@@ -13,9 +13,9 @@
 #include <ftw.h>
 #include <getopt.h>
 
-int main() {
-	char *args[] = {"./hello/vim", "."};
-	int rv = rename(args[0], args[1]);
+int main(int argc, char* argv[]) {
+	//char *args[] = {"./hello/vim/sm.txt", "."};
+	int rv = rename(args[1], args[2]);
 	if(rv) {
 	printf("Error: %d\n", errno);
 	}
