@@ -12,13 +12,23 @@
 #define CMDLEN 1250
 #define MAXNUMTOKENS 100
 
+/**********************************************
+ * Filename: shell.c
+ * Created by: Mohammad Luqman
+ * This is the main file that implements a basic shell with the following linux shell operations: 
+ * ls, mv, pwd, rm, cd, ps, tail, mkdir
+ * To exit, type "exit".
+ ********************************************/
+
 char *shellfn[] = {"mycd","exit"};
 int numshellfn = 2;
 
+//Implement the shell exit function
 int myexit(char **args) {
 	exit(0);
 }
 
+//Change directory function
 int mycd(char **args) {
 	if(args[1] == NULL) {
 			perror("mycd");
@@ -29,6 +39,7 @@ int mycd(char **args) {
 	return 1;
 }
 
+//Execute commands with arguments
 int cmd_execute(char** args) {
 	pid_t pid;
 	int status;
@@ -55,6 +66,7 @@ int cmd_execute(char** args) {
 	return 1;
 }
 
+//Tokenize user input
 char** split_into_tokens(char* str) {
 	/*This function takes a string as input and outputs tokens as command or parameter*/
 	char* pch;
@@ -72,6 +84,7 @@ char** split_into_tokens(char* str) {
 	return tokens;
 }
 
+//Read user input from stdin
 char* read_user_input() {
 				char *inputline = NULL;
 				size_t buffersize = 0;
