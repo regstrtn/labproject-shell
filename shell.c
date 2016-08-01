@@ -1,13 +1,13 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include<fcntl.h>
-#include<sys/types.h>
-#include<sys/wait.h>
-#include<errno.h>
-#include<signal.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <errno.h>
+#include <signal.h>
 #define PROMPT '>'
 #define CMDLEN 1250
 #define MAXNUMTOKENS 100
@@ -19,6 +19,20 @@
  * ls, mv, pwd, rm, cd, ps, tail, mkdir
  * To exit, type "exit".
  ********************************************/
+
+void setpathvar() {
+	char *pathname;
+	char curdir[500];
+	char newpath[1500];
+	getwd(curdir);
+	pathname = getenv("PATH");
+	strcpy(newpath, pathname);
+	strcat(newpath, ":");
+	strcat(newpath, curdir);
+	setenv("PATH", newpath, 1);
+	//printf("%s\n", getenv("PATH"));	
+}
+
 
 char *shellfn[] = {"mycd","exit"};
 int numshellfn = 2;
@@ -97,6 +111,7 @@ int main() {
 	char **args;
 	int retval; 
 	char *debugarg[3] = {"./mypwd", "mypwd", NULL};
+	setpathvar();
 	while(1) {
 			printf("%c", PROMPT);
 			cmdinput = read_user_input();

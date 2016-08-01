@@ -1,4 +1,4 @@
-all: myls mymv mymkdir mypwd mytail myrm
+all: shell myls mymv mymkdir mypwd mytail myrm
 myls:
 	gcc -o myls myls.c
 mymv:
@@ -11,3 +11,5 @@ mymkdir:
 	gcc -o mymkdir mymkdir.c
 mytail:
 	gcc -o mytail mytail.c
+shell:
+	gcc -o shell shell.c
