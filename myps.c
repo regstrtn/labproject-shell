@@ -9,6 +9,11 @@
 #include <pwd.h>
 #include <grp.h>
 
+int isnum(char* filename) {
+	if(isdigit(filename[0])) return 1;
+	else return 0;
+}
+
 int main(int argc, char* argv[]) {
 	struct dirent *de, de2;
 	struct stat st;
@@ -18,19 +23,38 @@ int main(int argc, char* argv[]) {
 	strcpy(dirtolist, "/proc");
 	DIR *dr = opendir(dirtolist);
 	DIR *dr2;
-	FILE *fp;
+	FILE *fp, *fp2;
 	char filetoread[300];
 	char *buffer = NULL;
 	int bufsize = 0;
+	int uidfound = 0;
+	char * cuid;
+	int numuid;
+	char cmdfile[300];
+	char *cmdbuffer;
 	while((de = readdir(dr))!=NULL) {
-		strcpy(filetoread, de->d_name);
+		strcpy(filetoread, "/proc/");
+		strcat(filetoread, de->d_name);
+		strcpy(cmdfile, filetoread);
 		strcat(filetoread, "/status");
-		fp = fopen("/proc/30956/status", "r");
-		stat(de->d_name, &st);
-		printf("%s\n", filetoread);
-		printf("Is digit: %d %d\n", atoi(de->d_name), isnumber(atoi(de->d_name)));
-		printf("%c\n", fgetc(fp));
-		//getline(&buffer, &bufsize, fp);
-		//	printf("%s", buffer);
-}
+		strcat(cmdfile, "/cmdline");
+		
+		if(isnum(de->d_name)) {
+			uidfound = 0;
+			if((fp = fopen(filetoread, "r")) == NULL) printf("File not found");
+			if((fp2 = fopen(cmdfile, "r"))==NULL) printf("File not found");
+			else {getline(&cmdbuffer, &bufsize, fp2);
+			printf("%s %s\n", filetoread, cmdbuffer);}
+			//printf("Is digit: %d %d\n", atoi(de->d_name), isnum(de->d_name));
+			stat(de->d_name, &st);
+			//printf("%c\n", fgetc(fp));
+			while(getline(&buffer, &bufsize, fp)>0) {
+				if(strncmp(buffer, "Uid", 3)==0) { 
+					printf("%s\n", buffer);
+					cuid = strtok(buffer, "\t"); cuid = strtok(NULL, "\t");
+					printf("userid: %d\n", atoi(cuid));
+				} 
+			}
+		}
+	}
 }
