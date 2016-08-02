@@ -23,7 +23,7 @@ int remove_cb_fn(const char* fpath, const struct stat* sb, int typeflag, struct 
 int rmrf(char* path) {
 	//replicate the functionality of rm -rf command in bash
 	int retval;
-	retval = nftw(path, remove_cb_fn, 64, FTW_PHYS | FTW_DEPTH);
+	retval = nftw(path, remove_cb_fn, 64, 1 | 8);
 	/* 	nftw: Traverses filetree. Parameters explained below: 
 	char* path: name of the directory
 	int(*) remove_cb_fn(char* fpath, struct stat* fb, int typeflag, struct FTW *ftwbuf): callback function on visiting each directory
