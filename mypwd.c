@@ -13,6 +13,6 @@
 
 int main(int argc, char* argv[]) {
 	char *pathname = (char *)malloc(sizeof(char)*MAXPATHNAME);
-	getwd(pathname);
+	getcwd(pathname, 250);
 	printf("%s\n", pathname);
 }
