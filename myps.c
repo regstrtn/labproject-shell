@@ -32,13 +32,14 @@ int main(int argc, char* argv[]) {
 	int numuid;
 	char cmdfile[300];
 	char *cmdbuffer;
+	int curuseruid = getuid();
 	printf("PID TTY TIME CMD\n");
 	while((de = readdir(dr))!=NULL) {
 		strcpy(filetoread, "/proc/");
 		strcat(filetoread, de->d_name);
 		strcpy(cmdfile, filetoread);
 		strcat(filetoread, "/status");
-		strcat(cmdfile, "/cmdline");
+		strcat(cmdfile, "/comm");
 		
 		if(isnum(de->d_name)) {
 			uidfound = 0;
@@ -54,9 +55,9 @@ int main(int argc, char* argv[]) {
 				if(strncmp(buffer, "Uid", 3)==0) { 
 					//printf("%s\n", buffer);
 					cuid = strtok(buffer, "\t"); cuid = strtok(NULL, "\t");
-					if(atoi(cuid)==501) {
+					if(atoi(cuid)==curuseruid) {
 					//printf("userid: %d", atoi(cuid));
-					printf("%s %s\n", de->d_name, cmdbuffer);
+					printf("%s %s", de->d_name, cmdbuffer);
 					}
 				} 
 			}
