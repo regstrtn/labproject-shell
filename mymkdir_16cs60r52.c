@@ -10,6 +10,13 @@
 #include<signal.h>
 #include <sys/stat.h>
 
+/**********************************************
+ * Filename: mymkdir.c
+ * Created by: Mohammad Luqman
+ * Implements the mkdir functionality
+	********************************************/
+
+
 
 int main(int argc, char* argv[]) {
 				int i = 0;

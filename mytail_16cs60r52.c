@@ -14,6 +14,14 @@
 #include <getopt.h>
 #define MAXLINESIZE 2000
 
+/**********************************************
+ * Filename: mytail.c
+ * Created by: Mohammad Luqman
+ * Implements the tail function 
+ * Specify number of lines to print. Default is 10 lines.
+	********************************************/
+
+
 typedef struct node {
 				char str[MAXLINESIZE];
 				int i;

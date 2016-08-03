@@ -13,6 +13,13 @@
 #include <ftw.h>
 #include <getopt.h>
 
+/**********************************************
+ * Filename: mymv.c
+ * Created by: Mohammad Luqman
+ * Implements the move/rename functionality
+	********************************************/
+
+
 int main(int argc, char * argv[]) {
 	if(argv[1]==NULL)  {
 		printf("mymv: No file specified\n");

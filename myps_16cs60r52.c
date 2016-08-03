@@ -9,6 +9,16 @@
 #include <pwd.h>
 #include <grp.h>
 
+/**********************************************
+ * Filename: myps.c
+ * Created by: Mohammad Luqman
+ * Implements the ps function
+ * Usage:  
+ * 	no flags	: Show current user's processes
+ * 	-A 				: Show all processes
+	********************************************/
+
+
 int isnum(char* filename) {
 	if(isdigit(filename[0])) return 1;
 	else return 0;

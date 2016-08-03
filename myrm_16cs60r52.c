@@ -12,6 +12,17 @@
 #define _XOPEN_SOURCE 500 //required by nftw function
 #include <ftw.h>
 
+/**********************************************
+ * Filename: myrm.c
+ * Created by: Mohammad Luqman
+ * Remove files or directory. 
+ * Usage: Accepts the following flags
+ * 	-d 			 : To remove an empty directory
+ * 	-rf 		 : To remove a non-empty directory
+ * 	no flags : Remove a file
+	********************************************/
+
+
 //Need to handle multiple arguments more carefully
 
 int remove_cb_fn(const char* fpath, const struct stat* sb, int typeflag, struct FTW *ftwbuf) {
@@ -28,8 +39,8 @@ int rmrf(char* path) {
 	char* path: name of the directory
 	int(*) remove_cb_fn(char* fpath, struct stat* fb, int typeflag, struct FTW *ftwbuf): callback function on visiting each directory
 	int nopenfd : number of simultaneously opened directories
-	int flags : Flags to specify behaviour of nftw, depth means post order traversal
-							phys means do not follow symbolic links
+	int flags : Flags to specify behaviour of nftw, 8 means post order traversal
+							1 means do not follow symbolic links
 	*/
 	return retval;
 }

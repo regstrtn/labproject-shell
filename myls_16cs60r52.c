@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -16,6 +16,13 @@
 #define PROMPT '>'
 #define MAXPATHNAME 250
 
+/**********************************************
+ * Filename: myls.c
+ * Created by: Mohammad Luqman
+ * Implements the ls -l functionality
+ ********************************************/
+
+
 int main(int argc, char* argv[]) {
 	struct dirent *de;
 	struct stat st;
@@ -23,11 +30,12 @@ int main(int argc, char* argv[]) {
 	struct group *gr;
 	time_t modtime;
 	int maxwidth = 8;
+	//Next five variables are used for formatting time output
 	char s[200];
 	size_t maxtime = 200;
 	char format[200];
 	struct tm* timeinfo;
-	char time_format[] = "%a %b %d %Y";
+	char time_format[] = "%a %b %d %Y"; 
 	char dirtolist[200];
 	strcpy(dirtolist, ".");
 	if(argv[1] != NULL) strcpy(dirtolist, argv[1]); 
@@ -54,7 +62,7 @@ int main(int argc, char* argv[]) {
 		printf(" %d", st.st_nlink);
 		printf(" %s %s", pw->pw_name, gr->gr_name);
     //st.st_uid, st.st_gid,
-		strcpy(format, "%b %d %H:%M:%S");
+		strcpy(format, "%b %d %H:%M:%S");  //Month day HOUR:MIN:SEC
 		timeinfo = localtime(&st.st_mtime);
 		strftime(s, maxtime, format, timeinfo);
 		printf(" %*lld %s %s\n", maxwidth, st.st_size, s,de->d_name);	

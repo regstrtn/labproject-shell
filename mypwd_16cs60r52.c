@@ -11,6 +11,13 @@
 #define PROMPT '>'
 #define MAXPATHNAME 250
 
+/**********************************************
+ * Filename: mypwd.c
+ * Created by: Mohammad Luqman
+ * Show current working directory
+	********************************************/
+
+
 int main(int argc, char* argv[]) {
 	char *pathname = (char *)malloc(sizeof(char)*MAXPATHNAME);
 	getcwd(pathname, 250);

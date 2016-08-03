@@ -15,12 +15,13 @@
 /**********************************************
  * Filename: shell.c
  * Created by: Mohammad Luqman
- * This is the main file that implements a basic shell with the following linux shell operations: 
+ * This is the main file that implements a basic shell with the following bash shell equivalent operations: 
  * ls, mv, pwd, rm, cd, ps, tail, mkdir
  * To exit, type "exit".
  ********************************************/
 
 void setpathvar() {
+	/*Set path variable so commands can be used from anywhere*/
 	char *pathname;
 	char curdir[500];
 	char newpath[1500];
@@ -30,7 +31,7 @@ void setpathvar() {
 	strcat(newpath, ":");
 	strcat(newpath, curdir);
 	setenv("PATH", newpath, 1);
-	//printf("%s\n", getenv("PATH"));	
+	printf("%s\n", getenv("PATH"));	
 }
 
 
