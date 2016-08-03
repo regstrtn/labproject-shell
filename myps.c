@@ -15,6 +15,9 @@ int isnum(char* filename) {
 }
 
 int main(int argc, char* argv[]) {
+	int flagset = 0;
+	if(argv[1]==NULL) flagset = 0;
+	else if(strcmp(argv[1],"-a")==0) flagset = 1;
 	struct dirent *de, de2;
 	struct stat st;
 	struct passwd *pw;
@@ -55,7 +58,7 @@ int main(int argc, char* argv[]) {
 				if(strncmp(buffer, "Uid", 3)==0) { 
 					//printf("%s\n", buffer);
 					cuid = strtok(buffer, "\t"); cuid = strtok(NULL, "\t");
-					if(atoi(cuid)==curuseruid) {
+					if(atoi(cuid)==curuseruid || flagset) {
 					//printf("userid: %d", atoi(cuid));
 					printf("%s %s", de->d_name, cmdbuffer);
 					}
